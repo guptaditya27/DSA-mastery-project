@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { login, register } from './api';
+import { X } from 'lucide-react';
 
 export default function LandingPage({ onLogin }) {
   const [showModal, setShowModal] = useState(false);
@@ -383,9 +384,7 @@ export default function LandingPage({ onLogin }) {
               className="absolute top-4 right-4 w-10 h-10 bg-slate-700 hover:bg-red-500 text-white rounded-full flex items-center justify-center transition-all z-10 shadow-lg border border-slate-600"
               onClick={() => setShowDemo(false)}
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              <X className="w-6 h-6" strokeWidth={3} />
             </button>
           </div>
         </div>
@@ -582,9 +581,7 @@ export default function LandingPage({ onLogin }) {
               className="absolute top-4 right-4 w-10 h-10 bg-slate-700 hover:bg-red-500 text-white rounded-full flex items-center justify-center transition-all z-10 shadow-lg border border-slate-600"
               onClick={() => setShowDeveloperModal(false)}
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              <X className="w-6 h-6" strokeWidth={3} />
             </button>
           </div>
         </div>
@@ -676,9 +673,7 @@ export default function LandingPage({ onLogin }) {
               className="absolute top-4 right-4 w-10 h-10 bg-slate-700 hover:bg-red-500 text-white rounded-full flex items-center justify-center transition-all z-10 shadow-lg border border-slate-600"
               onClick={() => setShowModal(false)}
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              <X className="w-6 h-6" strokeWidth={3} />
             </button>
           </div>
         </div>
