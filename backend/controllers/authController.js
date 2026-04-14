@@ -1,6 +1,9 @@
 import User from '../models/User.js';
 import bcrypt from "bcryptjs";
 import jwt from 'jsonwebtoken';
+import { OAuth2Client } from 'google-auth-library';
+
+
 
 export async function register(req, res) {
   try {
@@ -36,5 +39,42 @@ export async function login(req, res) {
     res.json({ token, user: { id: user._id, name: user.name, email: user.email, completedProblems: completed } });
   } catch (err) {
     res.status(500).json({ message: 'Login failed', error: err.message });
+  }
+}
+
+export async function googleAuth(req, res) {
+  try {
+    const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+    const { token } = req.body;
+    const ticket = await client.verifyIdToken({
+        idToken: token,
+        audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+    const { email, name } = payload;
+    
+    let user = await User.findOne({ email });
+    if (!user) {
+        // Create user with a strong random password since they logged in via Google
+        const randomPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
+        const hashed = await bcrypt.hash(randomPassword, 10);
+        user = await User.create({ name, email, password: hashed });
+    }
+    
+    const jwtToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+    
+    // Normalize completedProblems to a plain object before sending to frontend
+    const cp = user.completedProblems;
+    let completed = {};
+    if (!cp) completed = {};
+    else if (cp instanceof Map) completed = Object.fromEntries(cp);
+    else if (typeof cp === 'object') completed = cp;
+    else {
+      try { completed = JSON.parse(cp); } catch (e) { completed = {}; }
+    }
+
+    res.json({ token: jwtToken, user: { id: user._id, name: user.name, email: user.email, completedProblems: completed } });
+  } catch (err) {
+    res.status(500).json({ message: 'Google authentication failed', error: err.message });
   }
 }

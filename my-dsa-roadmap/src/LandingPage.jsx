@@ -1,8 +1,9 @@
 
 
 import React, { useState, useEffect } from "react";
-import { login, register } from './api';
+import { login, register, googleSignIn } from './api';
 import { X } from 'lucide-react';
+import { GoogleLogin } from '@react-oauth/google';
 
 export default function LandingPage({ onLogin }) {
   const [showModal, setShowModal] = useState(false);
@@ -63,6 +64,16 @@ export default function LandingPage({ onLogin }) {
       setError(err?.response?.data?.message || 'Authentication failed');
     }
   }
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      const data = await googleSignIn(credentialResponse.credential);
+      if (onLogin) onLogin(data.user);
+      setShowModal(false);
+    } catch (err) {
+      setError(err.response?.data?.message || 'Google Login failed');
+    }
+  };
 
   function handleDemoAnswer(optionId) {
     if (demoAttempts >= 2) {
@@ -653,12 +664,17 @@ export default function LandingPage({ onLogin }) {
               <div className="flex-1 h-px bg-slate-600"></div>
             </div>
 
-            <button className="w-full py-3 bg-white hover:bg-gray-100 text-gray-800 font-semibold rounded-xl border border-gray-300 transition-all flex items-center justify-center gap-2">
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M21.35 11.1h-9.18v2.73h5.23c-.22 1.18-1.32 3.47-5.23 3.47-3.15 0-5.72-2.61-5.72-5.83s2.57-5.83 5.72-5.83c1.8 0 3.01.77 3.7 1.43l2.52-2.45C16.2 3.9 14.36 3 12.17 3 6.98 3 2.83 7.13 2.83 12s4.15 9 9.34 9c5.39 0 8.95-3.79 8.95-9 0-.61-.07-1.21-.19-1.9z"/>
-              </svg>
-              Continue with Google
-            </button>
+            <div className="flex justify-center w-full bg-white rounded-xl overflow-hidden hover:bg-gray-50 border border-gray-300">
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={() => setError('Google Login Failed')}
+                theme="outline"
+                size="large"
+                shape="rectangular"
+                width="100%"
+                text="continue_with"
+              />
+            </div>
 
             <div className="mt-6 text-center">
               <button

@@ -58,16 +58,19 @@ export default React.memo(function MindmapView({ nodes, edges, problems, selecte
   const handleWheel = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
-    const delta = e.deltaY > 0 ? 0.9 : 1.1;
+    // Use smaller delta for smoother trackpad/mousewheel zooming
+    const zoomSensitivity = 0.0005;
+    const delta = Math.exp(-e.deltaY * zoomSensitivity);
     setViewTransform(prev => ({
       ...prev,
-      scale: Math.max(0.1, Math.min(3, prev.scale * delta))
+      // Restrict zoom limits to prevent map from being too tiny or absurdly huge
+      scale: Math.max(0.4, Math.min(1.5, prev.scale * delta))
     }));
   }, []);
 
   // Working zoom controls
-  const zoomIn = () => setViewTransform(prev => ({ ...prev, scale: Math.min(3, prev.scale * 1.2) }));
-  const zoomOut = () => setViewTransform(prev => ({ ...prev, scale: Math.max(0.1, prev.scale / 1.2) }));
+  const zoomIn = () => setViewTransform(prev => ({ ...prev, scale: Math.min(1.5, prev.scale * 1.2) }));
+  const zoomOut = () => setViewTransform(prev => ({ ...prev, scale: Math.max(0.4, prev.scale / 1.2) }));
 
   // Working fit to view
   const fitToView = useCallback(() => {
@@ -142,9 +145,9 @@ export default React.memo(function MindmapView({ nodes, edges, problems, selecte
       const node = nodeMap[nodeId];
       if (node) {
         setViewTransform({
-          scale: 1.2,
-          x: window.innerWidth / 2 - (node.x + node.w / 2) * 1.2,
-          y: window.innerHeight / 2 - (node.y + node.h / 2) * 1.2
+          scale: 1.0, // Fixed safe zoom factor instead of 1.2
+          x: window.innerWidth / 2 - (node.x + node.w / 2) * 1.0,
+          y: window.innerHeight / 2 - (node.y + node.h / 2) * 1.0
         });
       }
     }
