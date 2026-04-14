@@ -380,11 +380,11 @@ export default function LandingPage({ onLogin }) {
             </div>
 
             <button
-              className="absolute top-4 right-4 w-8 h-8 bg-slate-700 hover:bg-red-500 text-gray-400 hover:text-white rounded-full flex items-center justify-center transition-all"
+              className="absolute top-4 right-4 w-10 h-10 bg-slate-700 hover:bg-red-500 text-white rounded-full flex items-center justify-center transition-all z-10 shadow-lg border border-slate-600"
               onClick={() => setShowDemo(false)}
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
@@ -454,7 +454,12 @@ export default function LandingPage({ onLogin }) {
                   </h4>
                   
                   <div className="space-y-4">
-                    <div className="flex items-center justify-between p-3 bg-white bg-opacity-5 rounded-xl">
+                    <a 
+                      href="https://leetcode.com/u/offaditya_001" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="flex items-center justify-between p-3 bg-white bg-opacity-5 hover:bg-opacity-10 transition-colors rounded-xl cursor-pointer block"
+                    >
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 bg-green-500 bg-opacity-20 rounded-lg flex items-center justify-center">
                           <span className="text-green-400 font-bold text-sm">LC</span>
@@ -468,9 +473,14 @@ export default function LandingPage({ onLogin }) {
                         <p className="text-lg font-bold text-green-400">300+</p>
                         <p className="text-gray-400 text-xs">Rating: 1800+</p>
                       </div>
-                    </div>
+                    </a>
 
-                    <div className="flex items-center justify-between p-3 bg-white bg-opacity-5 rounded-xl">
+                    <a 
+                      href="https://www.geeksforgeeks.org/profile/adguptnaht" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="flex items-center justify-between p-3 bg-white bg-opacity-5 hover:bg-opacity-10 transition-colors rounded-xl cursor-pointer block"
+                    >
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 bg-orange-500 bg-opacity-20 rounded-lg flex items-center justify-center">
                           <span className="text-orange-400 font-bold text-sm">GFG</span>
@@ -484,9 +494,14 @@ export default function LandingPage({ onLogin }) {
                         <p className="text-lg font-bold text-orange-400">200+</p>
                         <p className="text-gray-400 text-xs">5 Star Rating</p>
                       </div>
-                    </div>
+                    </a>
 
-                    <div className="flex items-center justify-between p-3 bg-white bg-opacity-5 rounded-xl">
+                    <a 
+                      href="https://www.codechef.com/users/guptaditya27" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="flex items-center justify-between p-3 bg-white bg-opacity-5 hover:bg-opacity-10 transition-colors rounded-xl cursor-pointer block"
+                    >
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 bg-blue-500 bg-opacity-20 rounded-lg flex items-center justify-center">
                           <span className="text-blue-400 font-bold text-sm">CC</span>
@@ -500,7 +515,7 @@ export default function LandingPage({ onLogin }) {
                         <p className="text-lg font-bold text-blue-400">1600+</p>
                         <p className="text-gray-400 text-xs">3 Star Coder</p>
                       </div>
-                    </div>
+                    </a>
                   </div>
                 </div>
 
@@ -526,17 +541,15 @@ export default function LandingPage({ onLogin }) {
                     </a>
                     
                     <a
-                      href="https://portfolio-rosy-tau-rws7s0np3k.vercel.app"
+                      href="https://codolio.com/profile/guptaditya27"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-3 p-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl transition-all duration-300 hover:scale-105 shadow-lg"
+                      className="flex items-center gap-3 p-3 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-xl transition-all duration-300 hover:scale-105 shadow-lg"
                     >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9m0 9c-5 0-9-4-9-9s4-9 9-9" />
-                      </svg>
+                      <div className="w-5 h-5 flex items-center justify-center font-bold font-serif text-lg bg-white text-orange-500 rounded-full">C</div>
                       <div>
-                        <p className="font-semibold">Portfolio Website</p>
-                        <p className="text-gray-200 text-sm">View My Work</p>
+                        <p className="font-semibold">Codolio Profile</p>
+                        <p className="text-gray-100 text-sm">View my competitive stats</p>
                       </div>
                     </a>
                   </div>
@@ -566,11 +579,11 @@ export default function LandingPage({ onLogin }) {
             </div>
 
             <button
-              className="absolute top-4 right-4 w-8 h-8 bg-slate-700 hover:bg-red-500 text-gray-400 hover:text-white rounded-full flex items-center justify-center transition-all"
+              className="absolute top-4 right-4 w-10 h-10 bg-slate-700 hover:bg-red-500 text-white rounded-full flex items-center justify-center transition-all z-10 shadow-lg border border-slate-600"
               onClick={() => setShowDeveloperModal(false)}
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
@@ -660,11 +673,11 @@ export default function LandingPage({ onLogin }) {
             </div>
 
             <button
-              className="absolute top-4 right-4 w-8 h-8 bg-slate-700 hover:bg-red-500 text-gray-400 hover:text-white rounded-full flex items-center justify-center transition-all"
+              className="absolute top-4 right-4 w-10 h-10 bg-slate-700 hover:bg-red-500 text-white rounded-full flex items-center justify-center transition-all z-10 shadow-lg border border-slate-600"
               onClick={() => setShowModal(false)}
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
