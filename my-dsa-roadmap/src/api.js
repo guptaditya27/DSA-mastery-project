@@ -78,9 +78,35 @@ export function getToken() {
   return localStorage.getItem('token');
 }
 
-export async function login(email, password) {
-  const res = await api.post('/auth/login', { email, password });
+export async function checkUsernameApi(username) {
+  const res = await api.post('/auth/check-username', { username });
+  return res.data;
+}
+
+export async function login(identifier, password) {
+  const res = await api.post('/auth/login', { identifier, password });
   setToken(res.data.token);
+  return res.data;
+}
+
+export async function sendLoginOtpApi(email) {
+  const res = await api.post('/auth/login/otp/send', { email });
+  return res.data;
+}
+
+export async function verifyLoginOtpApi(email, otp) {
+  const res = await api.post('/auth/login/otp/verify', { email, otp });
+  setToken(res.data.token);
+  return res.data;
+}
+
+export async function sendResetOtpApi(email) {
+  const res = await api.post('/auth/forgot-password', { email });
+  return res.data;
+}
+
+export async function resetPasswordApi(email, otp, newPassword) {
+  const res = await api.post('/auth/reset-password', { email, otp, newPassword });
   return res.data;
 }
 
@@ -90,8 +116,8 @@ export async function googleSignIn(token) {
   return res.data;
 }
 
-export async function register(name, email, password) {
-  const res = await api.post('/auth/register', { name, email, password });
+export async function register(name, email, password, username) {
+  const res = await api.post('/auth/register', { name, email, password, username });
   return res.data;
 }
 
