@@ -155,13 +155,20 @@ export default function AuthModal({ isOpen, onClose, onLogin }) {
            </div>
            <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-200 tracking-tight mb-2">
               {mode === 'LOGIN' && 'Welcome Back'}
-              {mode === 'SIGNUP' && 'Create Account'}
-              {mode === 'LOGIN_OTP' && 'Token Auth'}
-              {mode === 'VERIFY_OTP' && 'Secure Auth'}
-              {mode === 'FORGOT_PASS' && 'System Access'}
-              {mode === 'RESET_PASS' && 'Reset Secure Key'}
+              {mode === 'SIGNUP' && 'Join DSA Mastery'}
+              {mode === 'LOGIN_OTP' && 'Login with OTP'}
+              {mode === 'VERIFY_OTP' && 'Verify OTP'}
+              {mode === 'FORGOT_PASS' && 'Forgot Password'}
+              {mode === 'RESET_PASS' && 'Reset Password'}
            </h2>
-           <p className="text-slate-400/80 text-sm font-medium">Securely access your internal dashboard</p>
+           <p className="text-slate-400/80 text-sm font-medium">
+               {mode === 'LOGIN' && 'Sign in to continue your DSA journey'}
+               {mode === 'SIGNUP' && 'Start mastering algorithms today'}
+               {mode === 'LOGIN_OTP' && "We'll send a one-time code to your email"}
+               {mode === 'VERIFY_OTP' && 'Enter the 6-digit code sent to your email'}
+               {mode === 'FORGOT_PASS' && 'Enter your email to receive a reset code'}
+               {mode === 'RESET_PASS' && 'Enter your code and set a new password'}
+            </p>
         </div>
 
         {error && <div className="text-rose-400 text-xs font-bold leading-relaxed bg-rose-500/10 ring-1 ring-rose-500/20 rounded-lg p-3 my-4">{error}</div>}
@@ -172,7 +179,7 @@ export default function AuthModal({ isOpen, onClose, onLogin }) {
            {(mode === 'LOGIN' || mode === 'LOGIN_OTP' || mode === 'FORGOT_PASS' || mode === 'SIGNUP' || mode === 'VERIFY_OTP' || mode === 'RESET_PASS') && (
               <input
                 type="text"
-                placeholder={mode === 'LOGIN' ? "Email or Identity Username" : "Registered Email"}
+                placeholder={mode === 'LOGIN' ? "Email or Username" : "Your Email Address"}
                 className={`w-full px-4 py-3.5 bg-[#040814] ring-1 ring-white/10 rounded-xl text-white placeholder-slate-600 focus:outline-none focus:ring-indigo-500/50 transition-all font-medium text-sm shadow-inner ${(mode === 'VERIFY_OTP' || mode === 'RESET_PASS') ? 'opacity-50 cursor-not-allowed' : ''}`}
                 value={email}
                 onChange={e => setEmail(e.target.value)}
@@ -183,15 +190,15 @@ export default function AuthModal({ isOpen, onClose, onLogin }) {
            {mode === 'SIGNUP' && (
              <>
                <div className="relative">
-                  <input type="text" placeholder="Unique Public Username" className="w-full px-4 py-3.5 bg-[#040814] ring-1 ring-white/10 rounded-xl text-white pr-10 placeholder-slate-600 focus:outline-none focus:ring-indigo-500/50 transition-all font-medium text-sm shadow-inner" value={username} onChange={e => setUsername(e.target.value.toLowerCase())} />
+                  <input type="text" placeholder="Choose a Username" className="w-full px-4 py-3.5 bg-[#040814] ring-1 ring-white/10 rounded-xl text-white pr-10 placeholder-slate-600 focus:outline-none focus:ring-indigo-500/50 transition-all font-medium text-sm shadow-inner" value={username} onChange={e => setUsername(e.target.value.toLowerCase())} />
                   {usernameStatus === 'available' && <CheckCircle2 className="absolute right-3 top-3.5 w-5 h-5 text-emerald-500 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]"/>}
                   {usernameStatus === 'checking' && <RotateCcw className="absolute right-3 top-3.5 w-5 h-5 text-slate-500 animate-spin"/>}
                </div>
-               {usernameStatus === 'invalid' && <p className="text-[10px] uppercase tracking-wide font-bold text-rose-500 px-1">Require 3-20 lowercase alphanumeric characters</p>}
-               {usernameStatus === 'taken' && <p className="text-[10px] uppercase tracking-wide font-bold text-rose-500 px-1">IDENTITY ALREADY REGISTERED</p>}
-               {usernameStatus === 'available' && <p className="text-[10px] uppercase tracking-wide font-bold text-emerald-500 px-1">IDENTITY AVAILABLE</p>}
+               {usernameStatus === 'invalid' && <p className="text-[10px] uppercase tracking-wide font-bold text-rose-500 px-1">3-20 lowercase letters, numbers, or underscores</p>}
+               {usernameStatus === 'taken' && <p className="text-[10px] uppercase tracking-wide font-bold text-rose-500 px-1">USERNAME TAKEN</p>}
+               {usernameStatus === 'available' && <p className="text-[10px] uppercase tracking-wide font-bold text-emerald-500 px-1">USERNAME AVAILABLE</p>}
                
-               <input type="text" placeholder="Legal Name" className="w-full px-4 py-3.5 bg-[#040814] ring-1 ring-white/10 rounded-xl text-white placeholder-slate-600 focus:outline-none focus:ring-indigo-500/50 transition-all font-medium text-sm shadow-inner" value={name} onChange={e => setName(e.target.value)} />
+               <input type="text" placeholder="Full Name" className="w-full px-4 py-3.5 bg-[#040814] ring-1 ring-white/10 rounded-xl text-white placeholder-slate-600 focus:outline-none focus:ring-indigo-500/50 transition-all font-medium text-sm shadow-inner" value={name} onChange={e => setName(e.target.value)} />
              </>
            )}
 
@@ -212,31 +219,31 @@ export default function AuthModal({ isOpen, onClose, onLogin }) {
            {/* Action Buttons */}
            {mode === 'LOGIN' && (
               <button onClick={handleStandardLogin} disabled={isLoading} className="w-full py-3.5 bg-white text-slate-950 font-bold tracking-tight rounded-xl transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] mt-4 disabled:opacity-50">
-                {isLoading ? "Authenticating..." : "Initialize Session"}
+                {isLoading ? "Signing In..." : "Sign In"}
               </button>
            )}
 
            {mode === 'SIGNUP' && (
               <button onClick={handleSignup} disabled={isLoading || usernameStatus !== 'available'} className="w-full py-3.5 bg-indigo-500 text-white font-bold tracking-tight rounded-xl transition-all shadow-[0_0_20px_rgba(99,102,241,0.3)] hover:shadow-[0_0_30px_rgba(99,102,241,0.5)] mt-4 disabled:opacity-50">
-                {isLoading ? "Registering..." : "Create Authority"}
+                {isLoading ? "Creating Account..." : "Create Account"}
               </button>
            )}
 
            {(mode === 'LOGIN_OTP' || mode === 'FORGOT_PASS') && (
               <button onClick={() => handleSendOtp(mode === 'FORGOT_PASS')} disabled={isLoading || cooldown > 0} className="w-full py-3.5 bg-white text-slate-950 font-bold tracking-tight rounded-xl transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)] mt-4 disabled:opacity-50">
-                {isLoading ? "Dispatching..." : cooldown > 0 ? `Resend Available in ${cooldown}s` : "Dispatch OTP"}
+                {isLoading ? "Sending..." : cooldown > 0 ? `Resend in ${cooldown}s` : "Send OTP"}
               </button>
            )}
 
            {mode === 'VERIFY_OTP' && (
               <button onClick={handleVerifyOtp} disabled={isLoading} className="w-full py-3.5 bg-emerald-500 text-slate-950 font-bold tracking-tight rounded-xl transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] mt-4 disabled:opacity-50">
-                {isLoading ? "Verifying..." : "Validate"}
+                {isLoading ? "Verifying..." : "Verify & Sign In"}
               </button>
            )}
 
            {mode === 'RESET_PASS' && (
               <button onClick={handleResetPassword} disabled={isLoading} className="w-full py-3.5 bg-emerald-500 text-slate-950 font-bold tracking-tight rounded-xl transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] mt-4 disabled:opacity-50">
-                {isLoading ? "Processing..." : "Confirm Override"}
+                {isLoading ? "Processing..." : "Reset Password"}
               </button>
            )}
 
@@ -246,13 +253,13 @@ export default function AuthModal({ isOpen, onClose, onLogin }) {
         {mode === 'LOGIN' && (
            <div className="relative z-10">
               <div className="flex flex-col sm:flex-row items-center justify-between mt-6 text-xs font-bold tracking-widest uppercase gap-4">
-                 <button className="text-slate-500 hover:text-white transition-colors" onClick={() => switchMode('LOGIN_OTP')}>Email OTP Auth</button>
+                 <button className="text-slate-500 hover:text-white transition-colors" onClick={() => switchMode('LOGIN_OTP')}>Login with OTP</button>
                  <button className="text-indigo-400 hover:text-indigo-300 transition-colors" onClick={() => switchMode('FORGOT_PASS')}>Forgot Password?</button>
               </div>
 
               <div className="flex items-center gap-4 my-6 py-2">
                 <div className="flex-1 h-px bg-white/5"></div>
-                <span className="text-[10px] font-bold text-slate-600 uppercase tracking-widest">Global Protocol</span>
+                <span className="text-[10px] font-bold text-slate-600 uppercase tracking-widest">Or continue with</span>
                 <div className="flex-1 h-px bg-white/5"></div>
               </div>
 
@@ -265,7 +272,7 @@ export default function AuthModal({ isOpen, onClose, onLogin }) {
         {(mode === 'VERIFY_OTP' || mode === 'RESET_PASS') && (
             <div className="relative z-10 mt-8 text-center">
               <button disabled={cooldown > 0} className="text-slate-500 hover:text-white text-xs font-bold tracking-wide transition-colors disabled:opacity-50" onClick={() => handleSendOtp(mode === 'RESET_PASS')}>
-                {cooldown > 0 ? `RESEND COOLDOWN: ${cooldown}s` : "RESEND OTP PROTOCOL"}
+                {cooldown > 0 ? `RESEND IN ${cooldown}s` : "RESEND OTP"}
               </button>
             </div>
         )}
@@ -273,7 +280,7 @@ export default function AuthModal({ isOpen, onClose, onLogin }) {
         {(mode === 'LOGIN' || mode === 'SIGNUP') && (
             <div className="relative z-10 mt-8 text-center border-t border-white/5 pt-6">
               <button className="text-slate-500 hover:text-white text-xs font-bold tracking-wide transition-colors" onClick={() => switchMode(mode === 'LOGIN' ? 'SIGNUP' : 'LOGIN')}>
-                {mode === 'LOGIN' ? "NO IDENTITY? CREATE ONE" : "EXISTING AUTHORITY? LOGIN"}
+                {mode === 'LOGIN' ? "New here? Create an account" : "Already have an account? Sign in"}
               </button>
             </div>
         )}
