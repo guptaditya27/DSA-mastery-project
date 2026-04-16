@@ -14,7 +14,7 @@ if (!MONGO_URI) {
   process.exit(1);
 }
 
-console.log('Attempting to connect to MongoDB at:', MONGO_URI);
+console.log('Attempting to connect to MongoDB...');
 
 // Set up mongoose connection with retries
 const startServer = (port) => {
@@ -39,9 +39,7 @@ const startServer = (port) => {
 const connectWithRetry = async () => {
   try {
     await mongoose.connect(MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
+      serverSelectionTimeoutMS: 30000, // 30s timeout for Atlas cold starts
     });
     console.log('MongoDB connected successfully');
     await startServer(PORT);
