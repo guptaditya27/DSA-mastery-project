@@ -68,7 +68,7 @@ const { completedProblems, setCompletedProblems, totalProgress, isSaving, isLoad
 
        
 
-        const [mindmapRes, problemsRes, progressRes, profileRes, patternsRes, statsRes] = results;
+        const [mindmapRes, problemsRes, profileRes, patternsRes, statsRes] = results;
 
         // mindmap
         if (mindmapRes.status === 'fulfilled' && mindmapRes.value) {
@@ -90,11 +90,6 @@ const { completedProblems, setCompletedProblems, totalProgress, isSaving, isLoad
         } else {
           console.error('Failed to fetch problems:', problemsRes.reason);
           setProblems([]);
-        }
-
-        // Progress is now handled by useProgressTracker hook (localStorage only)
-        if (progressRes.status === 'rejected') {
-          console.error('Failed to fetch progress:', progressRes.reason);
         }
 
         // profile
