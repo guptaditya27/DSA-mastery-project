@@ -12,6 +12,20 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   
+  // Profile Fields
+  profilePhoto: { type: String, default: '' },  // base64 data URL
+  college: { type: String, default: '' },
+  graduationYear: { type: String, default: '' },
+  bio: { type: String, default: '', maxlength: 200 },
+  
+  // Optional Profile Fields
+  phone: { type: String, default: '' },
+  city: { type: String, default: '' },
+  linkedinUrl: { type: String, default: '' },
+  githubUrl: { type: String, default: '' },
+  leetcodeUsername: { type: String, default: '' },
+  preferredLanguage: { type: String, default: '', enum: ['', 'C++', 'Java', 'Python', 'JavaScript', 'Go', 'Rust', 'TypeScript'] },
+
   // OTP Fields
   loginOtp: { type: String },
   loginOtpExpiry: { type: Date },

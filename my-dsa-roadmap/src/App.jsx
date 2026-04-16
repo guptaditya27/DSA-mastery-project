@@ -1,8 +1,9 @@
 
 import React, { useState, useEffect } from "react";
-import { fetchMindmap, fetchProgress, fetchUserProfile, fetchPatterns, fetchStats } from './api';
+import { fetchMindmap, fetchProgress, fetchUserProfile, fetchPatterns, fetchStats, updateUserProfile } from './api';
 import LandingPage from './LandingPage';
 import Header from './components/Header';
+import ProfileModal from './components/ProfileModal';
 import MindmapView from './components/MindmapView';
 import ProgressView from './components/ProgressView';
 import { useProgressTracker } from './hooks/useProgressTracker';
@@ -21,6 +22,7 @@ export default function App() {
   const [userProfile, setUserProfile] = useState(null);
   const [patterns, setPatterns] = useState([]);
   const [stats, setStats] = useState({});
+  const [showProfileModal, setShowProfileModal] = useState(false);
 
 
 const { completedProblems, setCompletedProblems, totalProgress, isSaving, isLoaded } =
@@ -195,6 +197,8 @@ const { completedProblems, setCompletedProblems, totalProgress, isSaving, isLoad
         onLogout={handleLogout}
         showMobileMenu={showMobileMenu}
         setShowMobileMenu={setShowMobileMenu}
+        userProfile={userProfile}
+        onOpenProfile={() => setShowProfileModal(true)}
       />
       <main className="flex-1 overflow-hidden">
         {viewMode === "mindmap" && (
@@ -219,6 +223,15 @@ const { completedProblems, setCompletedProblems, totalProgress, isSaving, isLoad
           />
         )}
       </main>
+      <ProfileModal
+        isOpen={showProfileModal}
+        onClose={() => setShowProfileModal(false)}
+        profile={userProfile}
+        onSave={async (data) => {
+          const updated = await updateUserProfile(data);
+          setUserProfile(updated);
+        }}
+      />
     </div>
   );
 }
