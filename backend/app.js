@@ -10,7 +10,17 @@ import userRoutes from './routes/user.js';
 import Problem from './models/Problem.js';
 
 const app = express();
-app.use(cors());
+
+// CORS: In production, only allow requests from the deployed frontend URL.
+// In development, allow all origins for convenience.
+const corsOptions = process.env.CLIENT_URL
+  ? {
+      origin: process.env.CLIENT_URL,
+      credentials: true,
+    }
+  : {};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Test endpoint for MongoDB connectivity
